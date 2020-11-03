@@ -5,11 +5,13 @@
 
 [Website and Leaderboards](https://fastMRI.org) | [Dataset](https://fastmri.med.nyu.edu/) | [GitHub](https://github.com/facebookresearch/fastMRI) | [Publications](#list-of-papers)
 
-Accelerating Magnetic Resonance Imaging (MRI) by acquiring fewer measurements has the potential to reduce medical costs, minimize stress to patients and make MR imaging possible in applications where it is currently prohibitively slow or expensive.
+Accelerating Magnetic Resonance Imaging (MRI) 通过获取更少的测量值，有可能降低医疗成本，将对患者的压力降到最低，并使MR成像在目前速度缓慢或昂贵的应用中成为可能。
 
-[fastMRI](https://fastMRI.org) is a collaborative research project from Facebook AI Research (FAIR) and NYU Langone Health to investigate the use of AI to make MRI scans faster. NYU Langone Health has released fully anonymized knee and brain MRI datasets that can be downloaded from [the fastMRI dataset page](https://fastmri.med.nyu.edu/). Publications associated with the fastMRI project can be found [at the end of this README](#list-of-papers).
 
-This repository contains convenient PyTorch data loaders, subsampling functions, evaluation metrics, and reference implementations of simple baseline methods. It also contains implementations for methods in some of the publications of the fastMRI project.
+[fastMRI](https://fastMRI.org) 
+是Facebook AI Research（FAIR）和NYU Langone Health的一项合作研究项目，旨在研究使用AI来加快MRI扫描的速度。 NYU Langone Health已发布了完全匿名的膝盖和大脑MRI数据集，可以从[the fastMRI dataset page](https://fastmri.med.nyu.edu/)下载。可以找到与fastMRI项目相关的出版物 [at the end of this README](#list-of-papers).
+
+该repository包含方便的PyTorch data loaders，subsampling 函数，评估指标以及简单基准方法的参考实现。它还包含fastMRI项目的某些出版物中方法的实现。
 
 ## Outline
 
@@ -24,7 +26,7 @@ This repository contains convenient PyTorch data loaders, subsampling functions,
 
 ## Documentation
 
-Documentation for the fastMRI dataset and baseline reconstruction performance can be found in [our paper on arXiv](https://arxiv.org/abs/1811.08839). The paper is updated on an ongoing basis for dataset additions and new baselines. If you use the fastMRI data or code in your project, please consider citing the arXiv paper:
+fastMRI数据集和基线重建性能的文档可以在[our paper on arXiv](https://arxiv.org/abs/1811.08839)中找到。本文会不断更新，以增加数据集和新的基准。如果在项目中使用fastMRI数据或代码，请考虑引用arXiv论文：
 
 ```BibTeX
 @inproceedings{zbontar2018fastMRI,
@@ -36,8 +38,7 @@ Documentation for the fastMRI dataset and baseline reconstruction performance ca
     year={2018}
 }
 ```
-
-For code documentation, most functions and classes have accompanying docstrings that you can access via the `help` function in IPython. For example:
+对于代码文档，大多数函数和类都有随附的docstrings，您可以通过IPython中的“help”函数来访问它们。例如：
 
 ```python
 from fastmri.data import SliceDataset
@@ -54,26 +55,26 @@ We have tested this code using:
 * CUDA 10.1
 * CUDNN 7.6.5
 
-First install PyTorch according to the directions at the [PyTorch Website](https://pytorch.org/get-started/) for your operating system and CUDA setup.
+首先根据安装说明安装PyTorch  [PyTorch Website](https://pytorch.org/get-started/) for your operating system and CUDA setup.
 
-Then, navigate to the `fastmri` root directory and run
+然后，导航到`fastmri`根目录并运行
 
 ```bash
 pip install -e .
 ```
 
-`pip` will handle all package dependencies. After this you should be able to run most the code in the repository.
+`pip` 将处理所有程序包依赖项。之后，您应该能够运行存储库中的大多数代码。
 
 ## Directory Structure & Usage
 
-Since August 2020, the repository has been refactored to operate as a package centered around the `fastmri` module, while configurations and scripts for reproducibility are now hosted in `experimental`. Other folders are in the process of being adapted to the new structure and then deprecated.
+自2020年8月起，该repository已进行重构，以“fastmri”模块为中心的软件包进行操作，而可再现性的配置和脚本在“experimental”中。其他文件夹正在适应新结构，然后被弃用。
 
-`fastmri`: Contains a number of basic tools for complex number math, coil combinations, etc.
+`fastmri`: 包含许多用于complex number math，coil combinations等的基本工具。
 
-* `fastmri/data`: Contains data utility functions from original `data` folder that can be used to create sampling masks and submission files.
-* `fastmri/models`: Contains baseline models, including the U-Net and the End-to-end Variational Network.
+* `fastmri/data`: 包含原始`data`文件夹中的数据处理函数，可用于创建采样mask和提交文件。
+* `fastmri/models`: 包含基线模型，包括U-Net和端到端Variational网络。 
 
-`experimental`: Folders intended to aid reproducibility of baselines and papers.
+`experimental`: 旨在帮助基线和论文重现的文件夹。
 
 * `experimental/zero_filled`: Examples for saving images for leaderboard submission, zero-filled baselines from [fastMRI: An open dataset and benchmarks for accelerated MRI (Zbontar, J. et al., 2018)](https://arxiv.org/abs/1811.08839).
 * `experimental/cs`: Compressed sensing baselines from [fastMRI: An open dataset and benchmarks for accelerated MRI (Zbontar, J. et al., 2018)](https://arxiv.org/abs/1811.08839).
@@ -91,15 +92,16 @@ Run `python -m pytest tests`.
 
 ## Training a model
 
-The [data README](https://github.com/facebookresearch/fastMRI/tree/master/fastmri/data/README.md) has a bare-bones example for how to load data and incorporate data transforms. This [jupyter notebook](https://github.com/facebookresearch/fastMRI/blob/master/fastMRI_tutorial.ipynb) contains a simple tutorial explaining how to get started working with the data.
+The [data README](https://github.com/facebookresearch/fastMRI/tree/master/fastmri/data/README.md) 有一个关于如何加载数据和合并数据转换的简单样本。
+This [jupyter notebook](https://github.com/facebookresearch/fastMRI/blob/master/fastMRI_tutorial.ipynb) 包含一个简单的教程，解释了如何开始使用数据。
 
-Please look at [this U-Net demo script](https://github.com/facebookresearch/fastMRI/blob/master/experimental/unet/train_unet_demo.py) for an example of how to train a model using the PyTorch Lightning framework included with the package.
+Please look at [this U-Net demo script](https://github.com/facebookresearch/fastMRI/blob/master/experimental/unet/train_unet_demo.py) 有关如何使用PyTorch Lightning框架训练模型的样本。
 
 ## Submitting to the Leaderboard
 
-Run your model on the provided test data and create a zip file containing your predictions. `fastmri` has a `save_reconstructions` function that saves the data in the correct format.
+在提供的测试数据上运行模型，并创建一个包含您的预测的zip文件。`fastmri` has a `save_reconstructions` function that saves the data in the correct format.
 
-Upload the zip file to any publicly accessible cloud storage (e.g. Amazon S3, Dropbox etc). Submit a link to the zip file on the [challenge website](https://fastmri.org/submit). You will need to create an account before submitting.
+将zip文件上传到任何公共可访问的云存储（例如Amazon S3，Dropbox等）。提交指向zip文件的链接  [challenge website](https://fastmri.org/submit). 您需要先创建一个帐户，然后才能提交。
 
 ## License
 
